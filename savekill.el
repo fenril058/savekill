@@ -73,7 +73,8 @@
   "savekill"
   :group 'killing)
 
-(defcustom save-kill-file-name "~/.emacs.d/kill-ring-saved.el"
+;;;###autoload
+(defcustom save-kill-file-name (concat user-emacs-directory "/kill-ring-saved.el")
   "*Saved `kill-ring' filename."
   :type 'string
   :group 'savekill)
@@ -109,7 +110,7 @@ See the command `save-kill-internal'."
     nil save-kill-file-name nil 'silent)))
 
 ;;;###autoload
-(defun savekill (&rest r)
+(defun savekill (&rest _r)
   "Save kill ring to `save-kill-file-name' everytime kill ring is updated."
   (save-kill-internal))
 
