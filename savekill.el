@@ -74,7 +74,7 @@
   :group 'killing)
 
 ;;;###autoload
-(defcustom save-kill-file-name (concat user-emacs-directory "/kill-ring-saved.el")
+(defcustom save-kill-file-name (locate-user-emacs-file "kill-ring-saved.el")
   "*Saved `kill-ring' filename."
   :type 'string
   :group 'savekill)
@@ -86,6 +86,12 @@ See the command `save-kill-internal'."
   :group 'savekill
   :type 'integer)
 
+(defcustom save-kill-coding-system 'utf-8
+  "Conding system for writing the file that `save-kill-file-name'.
+ `coding-system-for-write'"
+  :group 'savekill
+  :type 'coding-system)
+
 (defsubst savekill-trunc-list (l n)
   "Return from L the list of its first N elements."
   (if n
@@ -96,8 +102,6 @@ See the command `save-kill-internal'."
                 l  (cdr l)))
         (nreverse nl))
     l))
-
-(defvar save-kill-coding-system 'utf-8)
 
 (defun save-kill-internal ()
   (let ((coding-system-for-write save-kill-coding-system))
@@ -120,6 +124,7 @@ See the command `save-kill-internal'."
 
 ;;;###autoload
 (add-hook 'after-init-hook (lambda () (load save-kill-file-name t)))
+
 (provide 'savekill)
 
 ;; How to save (DO NOT REMOVE!!)
