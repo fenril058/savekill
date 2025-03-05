@@ -123,7 +123,7 @@ See the command `save-kill-internal'."
 ;; (advice-remove 'kill-new #'savekill)
 
 ;;;###autoload
-(add-hook 'after-init-hook (lambda () (load save-kill-file-name t)))
+(add-hook 'after-init-hook (lambda () (load save-kill-file-name t t)))
 
 (provide 'savekill)
 
