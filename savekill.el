@@ -106,12 +106,16 @@ See the command `save-kill-internal'."
 (defun save-kill-internal ()
   (let ((coding-system-for-write save-kill-coding-system))
     (write-region
-    (concat "(setq kill-ring '"
-            (prin1-to-string (savekill-trunc-list
-                              (mapcar 'substring-no-properties kill-ring)
-                              savekill-max-saved-items))
-            ")\n")
-    nil save-kill-file-name nil 'silent)))
+     (concat "(setq kill-ring '"
+             (prin1-to-string (savekill-trunc-list
+                               (mapcar (lambda (item)
+                                         (if (stringp item)
+                                             (substring-no-properties item)
+                                           (format "%s" item)))  ; 文字列でなければ変換
+                                       kill-ring)
+                               savekill-max-saved-items))
+             ")\n")
+     nil save-kill-file-name nil 'silent)))
 
 ;;;###autoload
 (defun savekill (&rest _r)
