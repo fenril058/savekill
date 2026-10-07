@@ -106,7 +106,8 @@ See the command `save-kill-internal'."
 (defun save-kill-internal ()
   (let ((coding-system-for-write save-kill-coding-system))
     (write-region
-     (concat "(setq kill-ring '"
+     (concat ";;; -*- lexical-binding: t; -*-\n"
+             "(setq kill-ring '"
              (prin1-to-string (savekill-trunc-list
                                (mapcar (lambda (item)
                                          (if (stringp item)
